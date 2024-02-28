@@ -6,44 +6,72 @@ startButton.addEventListener('click', () => {
 // IIFE
 const Gameboard = (()=>{
   let board = ['','','','','','','','','']
+  let gameboard = document.querySelector('#gameboard');
 
   function render(){
     board.forEach((square, index)=>{
-      gameboard = document.querySelector('#gameboard');
       newTile = document.createElement('div');
       newTile.classList.add("square");
-      newTile.id = `square-${index}`;
+      newTile.id = `${index}`;
       newTile.textContent = `${square}`;
       gameboard.appendChild(newTile);
     })
   }
 
-  return {render}
-
-})();
-
-const gameController = (()=>{
-  let players = [];
-  let curentPlayerIndex;
-  let gameOver;
-
-  const start = () => {
-    let one = document.querySelector('#player-one').value
-    let two = document.querySelector('#player-two').value
-    players = [
-      createPlayer(one, 'X'),
-      createPlayer(two, 'O')
-    ]
-
-    curentPlayerIndex = 0;
-    gameOver = false;
-    Gameboard.render()
+  function update(index, value){
+    board[index] = value;
+    clear(gameboard)
+    render();
+    board.slice(0, 8);
   }
 
-  return {start}
+  function clear(parent){
+    while (parent.lastChild) {
+      parent.removeChild(parent.lastChild);
+  }
+  }
+
+  return {
+    render,
+    update
+  }
 
 })();
 
+// IIFE with factory called
+const gameController = (()=>{
+  let players = [];
+  let currentPlayerIndex;
+  let gameOver;
+
+  function start() {
+    players = [
+      createPlayer(document.querySelector('#player-one').value, 'X'),
+      createPlayer(document.querySelector('#player-two').value, 'O')
+    ]
+
+    currentPlayerIndex = 0;
+    gameOver = false;
+    Gameboard.render()
+    const squares = document.querySelectorAll('.square')
+    squares.forEach((square) => {
+      square.addEventListener('click', handleClick)
+    })
+  }
+
+  function handleClick(event){
+    let index = parseInt(event.target.id);
+    Gameboard.update(index, players[currentPlayerIndex].marker)
+  }
+
+  return {
+    start,
+    handleClick
+  }
+
+})();
+
+// factory
 const createPlayer = (name, marker) => {
   return {
     name,
