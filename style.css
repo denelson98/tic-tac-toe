@@ -3,6 +3,9 @@
     margin: 0px;
 }
 
-body {
-    color: blue;
+.square {
+    border: 2px solid black;
+    height: 250px;
+    width: 250px;
+    color: black;
 }

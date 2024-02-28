@@ -1,6 +1,6 @@
 const startButton = document.querySelector('#start');
 startButton.addEventListener('click', () => {
-  // gameController.start();
+  gameController.start();
 });
 
 // IIFE
@@ -25,7 +25,7 @@ const Gameboard = (()=>{
 const gameController = (()=>{
   let players = [];
   let curentPlayerIndex;
-  let gameOver = false;
+  let gameOver;
 
   const start = () => {
     let one = document.querySelector('#player-one').value
@@ -36,7 +36,11 @@ const gameController = (()=>{
     ]
 
     curentPlayerIndex = 0;
+    gameOver = false;
+    Gameboard.render()
   }
+
+  return {start}
 
 })();
 
