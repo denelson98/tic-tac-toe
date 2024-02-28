@@ -22,7 +22,10 @@ const Gameboard = (()=>{
     board[index] = value;
     clear(gameboard)
     render();
-    board.slice(0, 8);
+    const squares = document.querySelectorAll('.square')
+    squares.forEach((square) => {
+      square.addEventListener('click', gameController.handleClick)
+    })
   }
 
   function clear(parent){
@@ -62,6 +65,7 @@ const gameController = (()=>{
   function handleClick(event){
     let index = parseInt(event.target.id);
     Gameboard.update(index, players[currentPlayerIndex].marker)
+    currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
   }
 
   return {
