@@ -2,11 +2,36 @@ const startButton = document.querySelector('#start');
 startButton.addEventListener('click', () => {
   gameController.start();
 });
+const restartButton = document.querySelector('#restart');
+restartButton.addEventListener('click', () => {
+  gameController.restart();
+});
+let gameboard = document.querySelector('#gameboard');
+
+function checkWinner(board){
+  const wins = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6]
+  ]
+
+  for (let i=0; i<wins.length; i++){
+    const [a,b,c] = wins[i]
+    if (board[a] && board[a] === board[b] && board[a] === board[c]){
+      return true;
+    } 
+  }
+  return false;
+}
 
 // IIFE
 const Gameboard = (()=>{
   let board = ['','','','','','','','','']
-  let gameboard = document.querySelector('#gameboard');
 
   function render(){
     board.forEach((square, index)=>{
@@ -19,6 +44,7 @@ const Gameboard = (()=>{
   }
 
   function update(index, value){
+    if (board[index] !== '') return;
     board[index] = value;
     clear(gameboard)
     render();
@@ -33,10 +59,14 @@ const Gameboard = (()=>{
       parent.removeChild(parent.lastChild);
   }
   }
+  
+  // indirectly return gameboard 
+  const getGameboard = () => gameboard;
 
   return {
     render,
-    update
+    update,
+    getGameboard
   }
 
 })();
@@ -64,13 +94,23 @@ const gameController = (()=>{
 
   function handleClick(event){
     let index = parseInt(event.target.id);
-    Gameboard.update(index, players[currentPlayerIndex].marker)
+    Gameboard.update(index, players[currentPlayerIndex].marker);
+    
+    if (checkWinner(Gameboard.getGameboard), players[currentPlayerIndex].mark){
+      gameOver = true;
+      document.querySelector('#winner').textContent = `${players[currentPlayerIndex].name} won`
+    }
     currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+  }
+
+  function restart(){
+    //
   }
 
   return {
     start,
-    handleClick
+    handleClick, 
+    restart
   }
 
 })();
