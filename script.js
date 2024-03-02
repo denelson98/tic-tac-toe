@@ -7,6 +7,7 @@ restartButton.addEventListener('click', () => {
   gameController.restart();
 });
 const gameboard = document.querySelector('#gameboard')
+const winner = document.querySelector('#winner')
 
 const Gameboard = (()=>{
   let board = ['','','','','','','','','']
@@ -66,34 +67,17 @@ const gameController = (()=>{
     if (Gameboard.getGameboard()[index] !== '') return;
     Gameboard.update(index, players[currentPlayerIndex].marker, event.target)
 
-    if (displayController.checkWinner(Gameboard.getGameboard(), players[currentPlayerIndex].marker)){
+    if (checkWinner(Gameboard.getGameboard(), players[currentPlayerIndex].marker)){
       gameOver = true;
-      alert(`${players[currentPlayerIndex].name} won!`)
-    } else if (displayController.checkTie(Gameboard.getGameboard())){
+      displayController.displayWinner(`${players[currentPlayerIndex].name} won!`)
+    } else if (checkTie(Gameboard.getGameboard())){
       gameOver = true;
-      alert("It's a tie.")
+      displayController.displayWinner("It's a tie.")
     }
     currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
    }
 
-   function restart(){
-    for (i =0; i <9; i++){
-      Gameboard.update(i, '', '');
-    }
-    Gameboard.clear();
-    Gameboard.render();
-    gameOver = false;
-   }
-
-   return {
-    start,
-    handleClick,
-    restart
-   }
-})();
-
-const displayController = (()=>{
-  function checkWinner(board){
+   function checkWinner(board){
     const winTypes = 
     [
       [0,1,2],
@@ -119,10 +103,30 @@ const displayController = (()=>{
     if (board.every(square => square !== '')) return true;
   }
 
-  return {
-    checkWinner,
-    checkTie
+   function restart(){
+    for (i =0; i <9; i++){
+      Gameboard.update(i, '', '');
+    }
+    Gameboard.clear();
+    Gameboard.render();
+    gameOver = false;
+    winner.textContent = ''
+   }
+
+   return {
+    start,
+    handleClick,
+    restart
+   }
+})();
+
+const displayController = (()=>{
+
+  function displayWinner(winningPlayer){
+    winner.textContent = winningPlayer
   }
+
+  return {displayWinner}
 })();
 
 
