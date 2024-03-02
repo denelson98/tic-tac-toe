@@ -48,6 +48,7 @@ const gameController = (()=>{
    let gameOver;
 
    function start(){
+    if (Gameboard.getGameboard().some(square => square !== '')) return;
     players = [
       createPlayer(document.querySelector('#player-one').value, 'X'),
       createPlayer(document.querySelector('#player-two').value, 'O')
@@ -59,10 +60,19 @@ const gameController = (()=>{
    }
 
    function handleClick(event){
+    if (gameOver) return;
     let index = parseInt(event.target.id);
     
     if (Gameboard.getGameboard()[index] !== '') return;
     Gameboard.update(index, players[currentPlayerIndex].marker, event.target)
+
+    if (displayController.checkWinner(Gameboard.getGameboard(), players[currentPlayerIndex].marker)){
+      gameOver = true;
+      alert(`${players[currentPlayerIndex].name} won!`)
+    } else if (displayController.checkTie(Gameboard.getGameboard())){
+      gameOver = true;
+      alert("It's a tie.")
+    }
     currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
    }
 
@@ -72,6 +82,7 @@ const gameController = (()=>{
     }
     Gameboard.clear();
     Gameboard.render();
+    gameOver = false;
    }
 
    return {
@@ -81,7 +92,40 @@ const gameController = (()=>{
    }
 })();
 
-// factory
+const displayController = (()=>{
+  function checkWinner(board){
+    const winTypes = 
+    [
+      [0,1,2],
+      [3,4,5],
+      [6,7,8],
+      [0,3,6],
+      [1,4,7],
+      [2,5,8],
+      [0,4,8],
+      [2,4,6]
+    ]
+
+    for (i = 0; i < winTypes.length; i++){
+      const [a,b,c] = winTypes[i];
+      if (board[a] && board[a] === board[b] && board[a] === board[c]){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function checkTie(board){
+    if (board.every(square => square !== '')) return true;
+  }
+
+  return {
+    checkWinner,
+    checkTie
+  }
+})();
+
+
 const createPlayer = (name, marker) => {
   return {
     name,
