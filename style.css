@@ -4,9 +4,11 @@
 }
 
 body {
+    height: 85vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 
 #gameboard {
@@ -27,4 +29,10 @@ body {
     color: black;
     font-size: 100px;
     font-weight: bold;
+}
+
+#winner {
+    font-size: 50px;
+    font-weight: bold;
+    margin: 25px
 }
