@@ -26,11 +26,18 @@ const Gameboard = (()=>{
     target.textContent = value;
   }
 
+  function clear(){
+    while (gameboard.lastChild) {
+      gameboard.removeChild(gameboard.lastChild);
+  }
+  }
+
   const getGameboard = () => board;
 
   return {
     render, 
     update,
+    clear,
     getGameboard
   }
 })();
@@ -59,9 +66,18 @@ const gameController = (()=>{
     currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
    }
 
+   function restart(){
+    for (i =0; i <9; i++){
+      Gameboard.update(i, '', '');
+    }
+    Gameboard.clear();
+    Gameboard.render();
+   }
+
    return {
     start,
-    handleClick
+    handleClick,
+    restart
    }
 })();
 
