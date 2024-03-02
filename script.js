@@ -13,14 +13,15 @@ const Gameboard = (()=>{
 
   function render(){
     squareList = document.createElement('div');
+    squareList.classList.add('square-list')
     board.forEach((square, index)=>{
       square = document.createElement('div');
       square.classList.add('square');
       square.id = `${index}`;
       squareList.appendChild(square)
     })
+    gameboard.appendChild(squareList)
   }
-  gameboard.appendChild(squareList)
 
   return {
     render

@@ -9,12 +9,13 @@ body {
     align-items: center;
 }
 
-#gameboard {
+.square-list {
     display: grid;
     grid-template-columns: repeat(3, 200px);
     grid-template-rows: repeat(3, 200px);
     margin: 24px;
 }
+
 
 .square {
     display: flex;
