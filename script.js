@@ -12,19 +12,23 @@ const Gameboard = (()=>{
   let board = ['','','','','','','','','']
 
   function render(){
-    squareList = document.createElement('div');
-    squareList.classList.add('square-list')
     board.forEach((square, index)=>{
       square = document.createElement('div');
       square.classList.add('square');
       square.id = `${index}`;
-      squareList.appendChild(square)
+      square.addEventListener('click', gameController.handleClick)
+      gameboard.appendChild(square)
     })
-    gameboard.appendChild(squareList)
+  }
+
+  function update(index, value, target){
+    board[index] = value;
+    target.textContent = value;
   }
 
   return {
-    render
+    render, 
+    update
   }
 })();
 
@@ -44,8 +48,14 @@ const gameController = (()=>{
 
    }
 
+   function handleClick(event){
+    let index = parseInt(event.target.id);
+    Gameboard.update(index, players[currentPlayerIndex].marker, event.target)
+   }
+
    return {
-    start
+    start,
+    handleClick
    }
 })();
 
