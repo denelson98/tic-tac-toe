@@ -14,7 +14,7 @@ body {
     flex-direction: column;
     padding: 64px;
     height: 90vh;
-    width: 100%;
+    width: 100vw;
     font-family: Times, 'Times New Roman', serif;
     display: flex;
     flex-direction: column;
@@ -80,5 +80,8 @@ button{
 @media only screen and (max-width: 786px) {
     body {
       zoom: 70%;
+    }
+    #gameboard, #winner, #contorls {
+        position: absolute;
     }
   }
