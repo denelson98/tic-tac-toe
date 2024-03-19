@@ -12,9 +12,9 @@
 body {
     display: flex;
     flex-direction: column;
-    padding: 90px;
-    height: 85vh;
-    width: 90vw;
+    padding: 64px 0px;
+    height: 90vh;
+    width: 100%;
     font-family: Times, 'Times New Roman', serif;
     display: flex;
     flex-direction: column;
