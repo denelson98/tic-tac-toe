@@ -33,13 +33,23 @@ const Gameboard = (()=>{
   }
   }
 
+  function disableStart(){
+    startButton.disabled = true;
+  }
+
+  function enableRestart(){
+    restartButton.disbaled = false;
+  }
+
   const getGameboard = () => board;
 
   return {
     render, 
     update,
     clear,
-    getGameboard
+    getGameboard, 
+    disableStart,
+    enableRestart
   }
 })();
 
@@ -51,13 +61,14 @@ const gameController = (()=>{
    function start(){
     if (Gameboard.getGameboard().some(square => square !== '')) return;
     players = [
-      createPlayer(document.querySelector('#player-one').value, 'X'),
-      createPlayer(document.querySelector('#player-two').value, 'O')
+      createPlayer('X'),
+      createPlayer('O')
     ]
     currentPlayerIndex = 0;
     gameOver = false;
     Gameboard.render();
-
+    Gameboard.disableStart();
+    Gameboard.enableRestart();
    }
 
    function handleClick(event){
@@ -69,7 +80,7 @@ const gameController = (()=>{
 
     if (checkWinner(Gameboard.getGameboard(), players[currentPlayerIndex].marker)){
       gameOver = true;
-      displayController.displayWinner(`${players[currentPlayerIndex].name} won!`)
+      displayController.displayWinner(`${players[currentPlayerIndex].marker} won!`)
     } else if (checkTie(Gameboard.getGameboard())){
       gameOver = true;
       displayController.displayWinner("It's a tie.")
@@ -110,7 +121,7 @@ const gameController = (()=>{
     Gameboard.clear();
     Gameboard.render();
     gameOver = false;
-    winner.textContent = ''
+    winner.textContent = 'Tic Tac Toe'
    }
 
    return {
@@ -130,9 +141,8 @@ const displayController = (()=>{
 })();
 
 
-const createPlayer = (name, marker) => {
+const createPlayer = (marker) => {
   return {
-    name,
     marker
   }
 }

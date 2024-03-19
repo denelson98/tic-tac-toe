@@ -4,18 +4,21 @@
 }
 
 body {
-    height: 85vh;
+    padding: 32px;
+    height: 90vh;
+    font-family: Times, 'Times New Roman', serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    background: linear-gradient(to bottom right, royalblue, lightblue);
 }
 
 #gameboard {
     display: grid;
     grid-template-columns: repeat(3, 200px);
     grid-template-rows: repeat(3, 200px);
-    margin: 24px;
+    border-radius: 12px;
 }
 
 
@@ -23,16 +26,38 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid black;
+    border: 2px solid white;
     height: 200px;
     width: 200px;
-    color: black;
+    color: white;
+    text-shadow: 2px 2px 5px rgb(208, 212, 214) ;
     font-size: 100px;
     font-weight: bold;
+    border-radius: 12px;
 }
 
 #winner {
     font-size: 50px;
     font-weight: bold;
-    margin: 25px
+    color: white;
+    margin-top: 24px;
+}
+
+#controls {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 32px;
+}
+
+button{
+    width: 200px;
+    height: 70px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: white;
+    padding: 20px;
+    background: linear-gradient(royalblue 50%, lightblue);
+    border: 2px solid white;
+    border-radius: 12px;
 }
