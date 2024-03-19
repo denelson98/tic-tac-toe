@@ -12,9 +12,9 @@
 body {
     display: flex;
     flex-direction: column;
-    padding: 32px;
-    height: 95vh;
-    width: 100vw;
+    padding: 90px;
+    height: 85vh;
+    width: 90vw;
     font-family: Times, 'Times New Roman', serif;
     display: flex;
     flex-direction: column;
@@ -61,7 +61,7 @@ body {
 #controls {
     display: flex;
     gap: 32px;
-    margin-bottom: 32px;
+    margin: 0px 32px;
 }
 
 button{
